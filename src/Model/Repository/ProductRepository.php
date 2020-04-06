@@ -12,6 +12,7 @@ class ProductRepository
      * Поиск продуктов по массиву id
      * @param int[] $ids
      * @return ProductRepository[]
+     */
     public function search(array $ids = []): array
     {
         if (!count($ids)) {
@@ -20,11 +21,18 @@ class ProductRepository
 
         $productList = [];
         foreach ($this->getDataFromSource(['id' => $ids]) as $item) {
-            $productList[] = new Product(
+
+//            $productList[] = new Product(
+////                $item['id'],
+////                $item['name'],
+////                $item['price']
+//            );
+
+            $product = new Product(
                 $item['id'],
                 $item['name'],
-                $item['price']
-            );
+                $item['price']);
+            $productList[] = clone $product;
         }
 
         return $productList;
@@ -33,15 +41,23 @@ class ProductRepository
     /**
      * Получаем все продукты
      * @return ProductRepository[]
+     */
     public function fetchAll(): array
     {
         $productList = [];
         foreach ($this->getDataFromSource() as $item) {
-            $productList[] = new Product(
+//            $productList[] = new Product(
+//                $item['id'],
+//                $item['name'],
+//                $item['price']
+//            );
+
+            $product = new Product(
                 $item['id'],
                 $item['name'],
                 $item['price']
             );
+            $productList[] = clone $product;
         }
 
         return $productList;

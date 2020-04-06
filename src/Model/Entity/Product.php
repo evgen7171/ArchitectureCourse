@@ -68,4 +68,14 @@ class Product
             'price' => $this->price,
         ];
     }
+
+    /**
+     * метод для создания прототипа
+     */
+    public function __clone()
+    {
+        $this->id = clone $this->id;
+        $this->name = clone $this->name;
+        $this->price = clone $this->price;
+    }
 }

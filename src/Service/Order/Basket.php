@@ -103,14 +103,27 @@ class Basket
 //        $communication = new Email();
 //        $security = new Security($this->session);
 
-        $basketBuilder = new BasketBuilder();
-        $basketBuilder
-            ->setBilling(new Card())
-            ->setDiscount(new NullObject())
-            ->setCommunication(new Email())
-            ->setSecurity(new Security($this->session));
+//        $basketBuilder = new BasketBuilder();
+//        $basketBuilder
+//            ->setBilling(new Card())
+//            ->setDiscount(new NullObject())
+//            ->setCommunication(new Email())
+//            ->setSecurity(new Security($this->session));
+//        $this->checkoutProcess($basketBuilder);
 
-        $this->checkoutProcess($basketBuilder);
+        $facade = new CheckoutFacade();
+        $this->checkoutFacade($facade);
+    }
+
+    /**
+     * @param CheckoutFacade $checkoutFacade
+     * @throws BillingException
+     * @throws CommunicationException
+     */
+    public function checkoutFacade(CheckoutFacade $checkoutFacade)
+    {
+        $checkoutFacade->setSecurity($this->session);
+        $this->checkoutProcess($checkoutFacade);
     }
 
     /**

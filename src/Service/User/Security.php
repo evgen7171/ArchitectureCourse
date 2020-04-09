@@ -6,6 +6,7 @@ namespace Service\User;
 
 use Model\Entity\User;
 use Model\Repository\UserRepository;
+use Service\SocialNetwork\VKSocialNetwork;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class Security implements SecurityInterface
@@ -62,6 +63,27 @@ class Security implements SecurityInterface
 
         // Здесь могут выполняться другие действия связанные с аутентификацией
         // пользователя
+
+        return true;
+    }
+
+    /**
+     * @param string $login
+     * @param string $password
+     * @return bool
+     */
+    public function socialAuthentication(): bool
+    {
+        if ($this->session->getId()) {
+            return true;
+        }
+        $user = VKSocialNetwork::driver()->user();
+
+        if(!$user){
+            return false;
+        }
+
+        $this->session->set(self::SESSION_USER_IDENTITY, $user->getId());
 
         return true;
     }

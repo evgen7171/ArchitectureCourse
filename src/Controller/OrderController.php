@@ -9,6 +9,7 @@ use Framework\BaseController;
 use Service\Billing\Exception\BillingException;
 use Service\Communication\Exception\CommunicationException;
 use Service\Order\Basket;
+use Service\Order\BasketCheckout;
 use Service\User\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

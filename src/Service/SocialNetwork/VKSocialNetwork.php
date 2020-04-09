@@ -8,34 +8,25 @@
 
 namespace Service\SocialNetwork;
 
+use Service\User\Security;
+use Symfony\Component\HttpFoundation\Request;
 
-abstract class BaseSocialNetwork implements BaseSocialNetworkInterface
+class VKSocialNetwork extends BaseSocialNetwork implements BaseSocialNetworkInterface
 {
-    public function __construct()
+    /**
+     * @return Array (social_KEY,social_SECRET,social_REDIRECT_URI)
+     */
+    public function getConfig(): Array
     {
-        $this->config = $this->getConfig();
+        // TODO: Implement getConfig() method.
     }
 
-    abstract public function getConfig();
-
-    public function login()
+    /**
+     * @param Request $request
+     * @return Security $user
+     */
+    public static function authentification(Request $request): ?Security
     {
-        session()->get('soc.token');
-        if (Auth::id()) {
-            return redirect()->route('home');
-        }
-        return Socialite::with('vkontakte')->redirect();
-    }
-
-    public function responce()
-    {
-        if (Auth::id()) {
-            return redirect()->route('home');
-        }
-        $user = Socialite::driver('vkontakte')->user();
-        session(['soc.token' => $user->token]);
-        $userInSystem = $userRepository->getUserBySocIdVK($user, 'vk');
-        Auth::login($userInSystem);
-        return redirect()->route('home');
+        // TODO: Implement authentification() method.
     }
 }

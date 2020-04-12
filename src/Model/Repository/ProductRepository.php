@@ -12,6 +12,7 @@ class ProductRepository
      * Поиск продуктов по массиву id
      * @param int[] $ids
      * @return ProductRepository[]
+     */
     public function search(array $ids = []): array
     {
         if (!count($ids)) {
@@ -33,6 +34,7 @@ class ProductRepository
     /**
      * Получаем все продукты
      * @return ProductRepository[]
+     */
     public function fetchAll(): array
     {
         $productList = [];

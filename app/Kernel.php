@@ -1,7 +1,9 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
+use Framework\Command\RegisterConfigsCommand;
+use Framework\Command\RegisterRoutesCommand;
 use Framework\Registry;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -39,12 +41,19 @@ class Kernel
      */
     public function handle(Request $request): Response
     {
-        $this->registerConfigs();
-        $this->registerRoutes();
+
+//        $this->registerConfigs();
+//        $this->registerRoutes();
+
+        (new RegisterConfigsCommand($this))->excute();
+        (new RegisterRoutesCommand($this))->excute();
 
         return $this->process($request);
     }
 
+    /**
+     * помещен в отдельную команду
+     */
     /**
      * @return void
      */
@@ -59,6 +68,10 @@ class Kernel
         }
     }
 
+
+    /**
+     * помещен отдельную команду
+     */
     /**
      * @return void
      */
@@ -95,5 +108,13 @@ class Kernel
 
             return new Response($error, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * @return ContainerBuilder
+     */
+    public function getContainerBuilder(): ContainerBuilder
+    {
+        return $this->containerBuilder;
     }
 }

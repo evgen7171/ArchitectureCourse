@@ -8,8 +8,12 @@
 
 namespace Framework\Contract;
 
+use Kernel;
 
-interface ContractInterface
+interface CommandInterface
 {
-
+    /**
+     * выполнение команды
+     */
+    public function excute():void;
 }

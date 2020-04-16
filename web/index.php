@@ -16,6 +16,10 @@ $containerBuilder = new ContainerBuilder();
 
 Registry::addContainer($containerBuilder);
 
+//реализация паттера Реестр (Ragistry)
+//Registry::addContainer для регистрации контайнера,
+// в который помещается само приложение (ContainerBuilder)
+
 $response = (new Kernel($containerBuilder))->handle($request);
 
 //запрос обрабатывается с поомщью метода handle "ядра" приложения,

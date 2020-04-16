@@ -13,6 +13,9 @@ use Symfony\Component\Routing\RouteCollection;
 
 class Registry
 {
+    /*
+     * в переменную containerBuilder кладется контейнер, в который помещается само приложение
+     */
     /**
      * @var ContainerBuilder
      */

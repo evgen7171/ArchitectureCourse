@@ -1,6 +1,7 @@
 <?php
 
 use Controller\MainController;
+use Controller\MainPageController;
 use Controller\OrderController;
 use Controller\ProductController;
 use Controller\UserController;
@@ -11,7 +12,7 @@ $routes = new RouteCollection();
 
 $routes->add(
     'index',
-    new Route('/', ['_controller' => [MainController::class, 'indexAction']])
+    new Route('/', ['_controller' => [MainPageController::class, 'action']])
 );
 
 $routes->add(

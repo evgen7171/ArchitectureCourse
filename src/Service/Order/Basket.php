@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Service\Order;
 
@@ -94,19 +94,36 @@ class Basket
     public function checkout(): void
     {
         // Здесь должна быть некоторая логика выбора способа платежа
-        $billing = new Card();
-
+//        $billing = new Card();
         // Здесь должна быть некоторая логика получения информации о скидке
         // пользователя
-        $discount = new NullObject();
-
+//        $discount = new NullObject();
         // Здесь должна быть некоторая логика получения способа уведомления
         // пользователя о покупке
-        $communication = new Email();
+//        $communication = new Email();
+//        $security = new Security($this->session);
 
-        $security = new Security($this->session);
+//        $basketBuilder = new BasketBuilder();
+//        $basketBuilder
+//            ->setBilling(new Card())
+//            ->setDiscount(new NullObject())
+//            ->setCommunication(new Email())
+//            ->setSecurity(new Security($this->session));
+//        $this->checkoutProcess($basketBuilder);
 
-        $this->checkoutProcess($discount, $billing, $security, $communication);
+        $facade = new CheckoutFacade();
+        $this->checkoutFacade($facade);
+    }
+
+    /**
+     * @param CheckoutFacade $checkoutFacade
+     * @throws BillingException
+     * @throws CommunicationException
+     */
+    public function checkoutFacade(CheckoutFacade $checkoutFacade)
+    {
+        $checkoutFacade->setSecurity($this->session);
+        $this->checkoutProcess($checkoutFacade);
     }
 
     /**
@@ -119,24 +136,39 @@ class Basket
      * @throws BillingException
      * @throws CommunicationException
      */
+
+    /**
+     * @param BasketBuilder $basketBuilder
+     * @throws BillingException
+     * @throws CommunicationException
+     */
     public function checkoutProcess(
-        DiscountInterface $discount,
-        BillingInterface $billing,
-        SecurityInterface $security,
-        CommunicationInterface $communication
-    ): void {
+        BasketBuilder $basketBuilder
+
+//        DiscountInterface $discount,
+//        BillingInterface $billing,
+//        SecurityInterface $security,
+//        CommunicationInterface $communication
+    ): void
+    {
+//        $basket = $basketBuilder->build();
+
         $totalPrice = 0;
         foreach ($this->getProductsInfo() as $product) {
             $totalPrice += $product->getPrice();
         }
 
-        $discount = $discount->getDiscount();
+//        $discount = $discount->getDiscount();
+        $discount = $basketBuilder->getDiscount();
         $totalPrice = $totalPrice - $totalPrice / 100 * $discount;
 
-        $billing->pay($totalPrice);
+//        $billing->pay($totalPrice);
+        $basketBuilder->getBilling()->pay($totalPrice);
 
-        $user = $security->getUser();
-        $communication->process($user, 'checkout_template');
+//        $user = $security->getUser();
+        $user = $basketBuilder->getSecurity()->getUser();
+//        $communication->process($user, 'checkout_template');
+        $basketBuilder->getCommunication()->process($user, 'checkout_template');
     }
 
     /**

@@ -6,6 +6,7 @@ namespace Controller;
 
 use Exception;
 use Framework\BaseController;
+use Service\SocialNetwork\VKSocialNetwork;
 use Service\User\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,8 @@ class UserController extends BaseController
     public function authenticationAction(Request $request): Response
     {
         if ($request->isMethod(Request::METHOD_POST)) {
+//            $user = VKSocialNetwork::authentification($request);
+
             $user = new Security($request->getSession());
 
             $isAuthenticationSuccess = $user->authentication(

@@ -21,11 +21,18 @@ class ProductRepository
 
         $productList = [];
         foreach ($this->getDataFromSource(['id' => $ids]) as $item) {
-            $productList[] = new Product(
+
+//            $productList[] = new Product(
+////                $item['id'],
+////                $item['name'],
+////                $item['price']
+//            );
+
+            $product = new Product(
                 $item['id'],
                 $item['name'],
-                $item['price']
-            );
+                $item['price']);
+            $productList[] = clone $product;
         }
 
         return $productList;
@@ -39,11 +46,18 @@ class ProductRepository
     {
         $productList = [];
         foreach ($this->getDataFromSource() as $item) {
-            $productList[] = new Product(
+//            $productList[] = new Product(
+//                $item['id'],
+//                $item['name'],
+//                $item['price']
+//            );
+
+            $product = new Product(
                 $item['id'],
                 $item['name'],
                 $item['price']
             );
+            $productList[] = clone $product;
         }
 
         return $productList;
